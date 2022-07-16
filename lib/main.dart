@@ -1,21 +1,26 @@
+import 'package:animation_onbording_screen/FadeAnimation.dart';
 import 'package:flutter/material.dart';
 
 main() {
-  runApp(const MaterialApp(
-    home: HomePage(),
-    debugShowCheckedModeBanner: false,
-  ));
+  runApp(
+    MaterialApp(
+      theme: ThemeData(fontFamily: 'Nunito'),
+      home: const HomePage(),
+      debugShowCheckedModeBanner: false,
+    ),
+  );
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  late PageController _pageController;
+  PageController _pageController;
+  int totalPage = 4;
 
   onScrol() {
     // print('ssss');
@@ -38,20 +43,32 @@ class _HomePageState extends State<HomePage> {
         controller: _pageController,
         physics: const BouncingScrollPhysics(),
         children: [
-          makePage('assets/images/one.jpg', 'Yosemite National Park',
-              'Yosemite National Park is in California’s Sierra Nevada mountains. It’s famed for its giant, ancient sequoia trees, and for Tunnel View, the iconic vista of towering Bridalveil Fall and the granite cliffs of El Capitan and Half Dome.'),
-          makePage('assets/images/two.jpg', 'Golden Gate Bridge',
-              'The Golden Gate Bridge is a suspension bridge spanning the Golden Gate, the one-mile-wide strait connecting San Francisco Bay and the Pacific Ocean.'),
-          makePage('assets/images/three.jpg', 'Sedona',
-              'Sedona is regularly described as one of America\'s most beautiful places. Nowhere else will you find a landscape as dramatically colorful.'),
-          makePage('assets/images/four.jpg', 'Savannah',
-              'Savannah, with its Spanish moss, Southern accents and creepy graveyards, is a lot like Charleston, South Carolina. But this city about 100 miles to the south has an eccentric streak.'),
+          makePage(
+              'assets/images/one.jpg',
+              'Yosemite National Park',
+              'Yosemite National Park is in California’s Sierra Nevada mountains. It’s famed for its giant, ancient sequoia trees, and for Tunnel View, the iconic vista of towering Bridalveil Fall and the granite cliffs of El Capitan and Half Dome.',
+              '1'),
+          makePage(
+              'assets/images/two.jpg',
+              'Golden Gate Bridge',
+              'The Golden Gate Bridge is a suspension bridge spanning the Golden Gate, the one-mile-wide strait connecting San Francisco Bay and the Pacific Ocean.',
+              '2'),
+          makePage(
+              'assets/images/three.jpg',
+              'Sedona',
+              'Sedona is regularly described as one of America\'s most beautiful places. Nowhere else will you find a landscape as dramatically colorful.',
+              '3'),
+          makePage(
+              'assets/images/four.jpg',
+              'Savannah',
+              'Savannah, with its Spanish moss, Southern accents and creepy graveyards, is a lot like Charleston, South Carolina. But this city about 100 miles to the south has an eccentric streak.',
+              '4'),
         ],
       ),
     );
   }
 
-  Widget makePage(String image, String title, String description) {
+  Widget makePage(String image, String title, String description, String page) {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -82,17 +99,17 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 textBaseline: TextBaseline.alphabetic,
-                children: const [
-                  Text(
-                    '1',
-                    style: TextStyle(
+                children: [
+                  FadeAnimation(2, Text(
+                    page.toString(),
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 30,
                         fontWeight: FontWeight.bold),
-                  ),
+                  )),
                   Text(
-                    '/5',
-                    style: TextStyle(
+                    '/$totalPage',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                     ),
@@ -104,17 +121,17 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
+                    FadeAnimation(2, Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 40,
+                          fontSize: 50,
                           fontWeight: FontWeight.bold),
-                    ),
+                    )),
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
+                    FadeAnimation(1.5, Row(
                       children: [
                         Container(
                           margin: const EdgeInsets.only(right: 3),
@@ -147,13 +164,13 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const Text('(2300)',
                             style:
-                                TextStyle(color: Colors.white38, fontSize: 12))
+                            TextStyle(color: Colors.white38, fontSize: 12))
                       ],
-                    ),
+                    ),),
                     const SizedBox(
                       height: 20,
                     ),
-                    Padding(
+                    FadeAnimation(2.5, Padding(
                       padding: const EdgeInsets.only(right: 50),
                       child: Text(
                         description,
@@ -163,6 +180,16 @@ class _HomePageState extends State<HomePage> {
                           fontSize: 15,
                         ),
                       ),
+                    )),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    FadeAnimation(2, Text(
+                      'Read More',
+                      style: TextStyle(color: Colors.white),
+                    )),
+                    const SizedBox(
+                      height: 30,
                     ),
                   ],
                 ),
